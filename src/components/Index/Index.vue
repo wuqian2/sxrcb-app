@@ -16,7 +16,7 @@
         <div class="card" style="height: 35%">
             <van-row style="margin-top: 30px" type="flex" justify="center" >
                 <van-col span="5">
-                    <img width="85" alt="Vue logo" src="../../assets/man.png" style="margin-top: 20px">
+                    <img width="85" alt="Vue logo" src="../../assets/index/man.png" style="margin-top: 20px">
                 </van-col>
                 <van-col span="16">
                     <div style="padding: 20px 0 0 60px">
@@ -50,19 +50,19 @@
         </div>
 
         <div class="card" style="padding: 0">
-            <van-grid :column-num="3">
-                <van-grid-item
-                        v-for="value in 6"
-                        :key="value"
-                        icon="photo-o"
-                        text="文字"
-                />
+            <van-grid clickable :column-num="3">
+                <van-grid-item  icon="records"   text="学习"  :to="{name: 'exam'}" />
+                <van-grid-item  icon="contact"  text="人员"  />
+                <van-grid-item  icon="bar-chart-o"  text="图标"  />
+                <van-grid-item  icon="balance-pay"  text="文字"  />
+                <van-grid-item  icon="envelop-o"  text="文字"  />
+                <van-grid-item  icon="cashier-o"  text="文字"  />
             </van-grid>
         </div>
 
         <van-tabbar>
             <van-tabbar-item icon="home-o">主页</van-tabbar-item>
-            <van-tabbar-item icon="search">资讯</van-tabbar-item>
+            <van-tabbar-item icon="search">消息</van-tabbar-item>
             <van-tabbar-item icon="setting-o">个人中心</van-tabbar-item>
         </van-tabbar>
     </div>
@@ -97,6 +97,10 @@
         background-color: #fff;
         border-radius: 5px;
         box-shadow: 0 8px 12px #ebedf0;
+    }
+
+    .van-grid{
+        height: 250px;
     }
 
 </style>

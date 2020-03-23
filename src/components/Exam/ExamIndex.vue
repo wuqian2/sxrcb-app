@@ -29,7 +29,6 @@
             <van-tabbar-item icon="home-o">考试题库</van-tabbar-item>
             <van-tabbar-item icon="search">模拟考试</van-tabbar-item>
             <van-tabbar-item icon="friends-o">错题练习</van-tabbar-item>
-            <van-tabbar-item icon="setting-o">个人中心</van-tabbar-item>
         </van-tabbar>
     </div>
 </template>
@@ -47,11 +46,11 @@
         },
         methods: {
             back: function () {
-                router.push({name:'login'})
+                this.$router.back();
             },
 
             toExam: function () {
-                router.push({name:'exam'})
+                router.push({name:'examInfo'})
             }
 
         }

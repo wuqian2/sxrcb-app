@@ -42,7 +42,6 @@
 </template>
 
 <script>
-    import router from "../../router/router";
 
     export default {
         name: "Index",
@@ -56,7 +55,7 @@
         },
         methods: {
             back: function () {
-                router.push({name: 'index'})
+                this.$router.back();
             },
             showList: function () {
                 this.showFlag = true
