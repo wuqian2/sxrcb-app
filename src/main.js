@@ -5,6 +5,7 @@ import 'vant/lib/index.css';
 import router from "./router/router";
 
 
+
 Vue.config.productionTip = false
 Vue.use(Vant);
 

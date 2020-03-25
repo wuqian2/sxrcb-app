@@ -8,7 +8,6 @@
                 @click-left="back"
         />
 
-        <div class="cards">
             <van-card
                     desc="银行从业资格考试习题练习"
                     title="银行从业资格考试"
@@ -20,11 +19,8 @@
                     desc="PMP考试习题"
                     title="PMP"
                     thumb="https://img.yzcdn.cn/vant/ipad.jpeg"
+                    @click="toExam"
             />
-
-        </div>
-
-
         <van-tabbar>
             <van-tabbar-item icon="home-o">考试题库</van-tabbar-item>
             <van-tabbar-item icon="search">模拟考试</van-tabbar-item>
@@ -61,11 +57,17 @@
 <style scoped>
     .container{
         margin: 0;
-        height: 100%;
+        height: 85%;
         width: 100%;
         background-color: #f5f5f5;
-        padding-top: 60px;
+        padding-top: 15%;
+        overflow: auto;
     }
+
+    .van-card{
+        position: static;
+    }
+
     .van-nav-bar{
      background-color: #2c3e50;
     }

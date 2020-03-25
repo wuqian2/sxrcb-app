@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" id="test">
         <van-nav-bar
                 title="xxx练习题"
                 fixed
@@ -16,18 +16,18 @@
         </van-nav-bar>
 
 
-        <van-panel title="（单选题）1、王司马斯大林大街阿看到了阿斯顿克林顿拉斯的看见了" style="padding: 0 10px 40px 10px">
-            <van-radio-group v-model="test">
-                <van-radio name="1" class="radio">单选框 1</van-radio>
-                <van-radio name="2" class="radio">单选框 2</van-radio>
+        <van-panel :title="topicTitle" style="padding: 0 10px 40px 10px">
+            <van-radio-group v-model="topic.answer">
+                <van-radio v-for="option in topic.options" :key="option.optionId" :name="option.optionId" class="radio">{{option.content}}</van-radio>
+
             </van-radio-group>
         </van-panel>
 
 
         <van-tabbar v-model="active">
-            <van-tabbar-item icon="arrow-left">上一题</van-tabbar-item>
+            <van-tabbar-item icon="arrow-left" @click="lastTopic">上一题</van-tabbar-item>
             <van-tabbar-item icon="description" @click="showList">查看</van-tabbar-item>
-            <van-tabbar-item icon="arrow">下一题</van-tabbar-item>
+            <van-tabbar-item icon="arrow" @click="nextTopic">下一题</van-tabbar-item>
         </van-tabbar>
 
 
@@ -42,6 +42,11 @@
 </template>
 
 <script>
+    import examData from '../../assets/Mock/ExamMock.json';
+    import { Dialog } from 'vant';
+    import * as Hammer from 'hammerjs';
+
+
 
     export default {
         name: "Index",
@@ -50,7 +55,8 @@
                 active: 'xx',
                 time: 30 * 60 * 60 * 1000,
                 showFlag: false,
-                test: ''
+                topicIndex: 0,
+                topic: {}
             }
         },
         methods: {
@@ -58,22 +64,59 @@
                 this.$router.back();
             },
             showList: function () {
+                // 查看答题情况
                 this.showFlag = true
-            }
+            },
+            nextTopic: function () {
+                // 上一题
+                if (this.topicIndex === examData.length -1) {
+                    Dialog.alert({message:"已是最后一题！"})
+                }else {
+                    this.topicIndex = this.topicIndex+1;
+                    this.topic = examData[this.topicIndex];
+                }
 
+            },
+            lastTopic: function () {
+                // 下一题
+                if (this.topicIndex === 0) {
+                    Dialog.alert({message:"已是第一题！"})
+                }else {
+                    this.topicIndex = this.topicIndex-1;
+                    this.topic = examData[this.topicIndex];
+                }
+            }
+        },
+        computed: {
+            topicTitle: function () {
+                // 拼接题目的题干
+                var topic = this.topic;
+                var type = topic.type == "01" ? "单选题" : "多选题";
+                var title = "(" + type + ")" + (this.topicIndex + 1) + "、" + topic.title;
+               return  title;
+            }
+        },
+        mounted() {
+            this.topic = examData[this.topicIndex];
+
+
+            var hammertime = new Hammer(document.getElementById("test"));
+            hammertime.on('panleft', function(ev) {
+                alert(123);
+                console.log(ev);
+            });
 
         }
-
     }
 </script>
 
 <style scoped>
     .container {
         margin: 0;
-        height: 100%;
+        height: 90%;
         width: 100%;
         background-color: #f5f5f5;
-        padding-top: 60px;
+        padding-top: 15%;
     }
 
     .van-nav-bar {
