@@ -16,13 +16,15 @@
         </van-nav-bar>
 
 
-        <van-panel :title="topicTitle" style="padding: 0 10px 40px 10px">
-            <van-radio-group v-model="topic.answer">
+        <div id="topicPanel">
+            <van-panel  :title="topicTitle" style="padding: 0 10px 40px 10px;">
+             <van-radio-group v-model="topic.answer">
                 <van-radio v-for="option in topic.options" :key="option.optionId" :name="option.optionId" class="radio">{{option.content}}</van-radio>
 
-            </van-radio-group>
-        </van-panel>
+             </van-radio-group>
+         </van-panel>
 
+        </div>
 
         <van-tabbar v-model="active">
             <van-tabbar-item icon="arrow-left" @click="lastTopic">上一题</van-tabbar-item>
@@ -45,6 +47,8 @@
     import examData from '../../assets/Mock/ExamMock.json';
     import { Dialog } from 'vant';
     import * as Hammer from 'hammerjs';
+    import Velocity from 'velocity-animate';
+    import 'velocity-animate/velocity.ui.js';
 
 
 
@@ -56,7 +60,8 @@
                 time: 30 * 60 * 60 * 1000,
                 showFlag: false,
                 topicIndex: 0,
-                topic: {}
+                topic: {},
+                visible: true
             }
         },
         methods: {
@@ -68,22 +73,23 @@
                 this.showFlag = true
             },
             nextTopic: function () {
-                // 上一题
+                // 下一题
                 if (this.topicIndex === examData.length -1) {
                     Dialog.alert({message:"已是最后一题！"})
                 }else {
                     this.topicIndex = this.topicIndex+1;
                     this.topic = examData[this.topicIndex];
+                    Velocity(document.getElementById("topicPanel"), "transition.slideRightIn",{ duration: 500});
                 }
-
             },
             lastTopic: function () {
-                // 下一题
+                // 上一题
                 if (this.topicIndex === 0) {
                     Dialog.alert({message:"已是第一题！"})
                 }else {
                     this.topicIndex = this.topicIndex-1;
                     this.topic = examData[this.topicIndex];
+                    Velocity(document.getElementById("topicPanel"), "transition.slideLeftIn",{ duration: 500});
                 }
             }
         },
@@ -98,12 +104,17 @@
         },
         mounted() {
             this.topic = examData[this.topicIndex];
-
+            let that = this;
 
             var hammertime = new Hammer(document.getElementById("test"));
-            hammertime.on('panleft', function(ev) {
-                alert(123);
-                console.log(ev);
+            // 左滑监听事件
+            hammertime.on('swipeleft', function() {
+                that.nextTopic();
+            });
+
+            // 右滑监听事件
+            hammertime.on('swiperight', function() {
+                that.lastTopic();
             });
 
         }
@@ -133,5 +144,12 @@
 
     .radio {
         margin-top: 20px;
+    }
+
+    .van-tabbar--fixed{
+        position: absolute;
+    }
+    .van-nav-bar--fixed{
+        position: absolute;
     }
 </style>
