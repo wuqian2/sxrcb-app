@@ -51,7 +51,7 @@
         },
         methods: {
             onSubmit: function () {
-                router.push({name: 'index'})
+                router.push({name: 'login'})
             }
         }
 

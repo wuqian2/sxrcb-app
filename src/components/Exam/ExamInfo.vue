@@ -42,6 +42,10 @@
                         <van-tag round plain :color="(examData[index].answer || (examData[index].answerArray && examData[index].answerArray.length > 0 )) ? '#07c160':'#000000'"  type="primary">{{value}}</van-tag>
                     </van-grid-item>
                 </van-grid>
+
+                <template #footer>
+                    <van-button size="small" plain type="info" style="width: 80%" @click="submitAnswer">提交并查看答案</van-button>
+                </template>
             </van-panel>
         </van-popup>
     </div>
@@ -100,7 +104,27 @@
                     this.topic = examData[this.topicIndex];
                     Velocity(document.getElementById("topicPanel"), "transition.slideLeftIn",{ duration: 500});
                 }
+            },
+            submitAnswer: function () {
+                var that = this;
+
+                function beforeClose(action, done) {
+                    if (action === 'confirm') {
+                        // 提交后台获取答案后展示页面
+                        setTimeout(done, 1000);
+                        that.showFlag = false;
+                    } else {
+                        done();
+                    }
+                }
+
+                Dialog.confirm({
+                    message: '确认提交试卷？',
+                    beforeClose
+                });
+
             }
+
         },
         computed: {
             topicTitle: function () {
@@ -145,6 +169,8 @@
 
     .van-nav-bar__title {
         color: #ffffff;
+        float: left;
+        margin-left: 15%;
     }
 
     .van-cell__title {
