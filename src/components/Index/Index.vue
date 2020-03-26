@@ -35,7 +35,7 @@
                 Dialog.confirm({
                     message: '确认退出登录吗？'
                 }).then(() => {
-                    router.push({name: 'home'})
+                    router.push({name: 'login'})
                 }).catch(() => {
                     // on cancel
                 });
