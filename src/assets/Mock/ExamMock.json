@@ -65,7 +65,7 @@
     "topicId": "1",
     "type": "02",
     "title": "这是第四题这是第四题这是第四题这是第四题这是第四题？",
-    "answer": "",
+    "answerArray": [],
     "options": [
       {
         "optionId": "01",
@@ -86,7 +86,7 @@
     "topicId": "1",
     "type": "02",
     "title": "这是第五题这是第五题这是第五题这是第五题这是第五题这是第五题？",
-    "answer": "",
+    "answerArray": [],
     "options": [
       {
         "optionId": "01",
